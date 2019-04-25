@@ -5,14 +5,36 @@ import './index.css'
 class Square extends React.Component{
     render(){
         return (
-            <button className="square">{this.props.value}</button>
+            <button 
+                className="square" 
+                onClick={()=>this.props.onClick()}
+                // this.setState({value:'X'})
+            >
+                {this.props.value}
+            </button>
         );
     }
 }
 
 class Board extends React.Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            squares: Array(9).fill(null)
+        }
+    }
+    
+    clickHandle(i){
+        const squares = this.state.squares.slice();
+        squares[i] = 'X';
+        this.setState({squares:squares});
+    }
+
     renderSquare(i){
-        return <Square value={i}/>;
+        return <Square 
+            value={this.state.squares[i]}
+            onClick={()=>this.clickHandle(i)}
+        />;
     }
     render(){
         const status = 'Next Player: X'
@@ -31,8 +53,8 @@ class Board extends React.Component{
                 </div>
                 <div className="board-row">
                     {this.renderSquare(6)}
-                    {this.renderSquare(6)}
-                    {this.renderSquare(6)}
+                    {this.renderSquare(7)}
+                    {this.renderSquare(8)}
                 </div>
             </div>
         );
