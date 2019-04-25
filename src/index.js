@@ -1,33 +1,38 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
+import calculateWinner from './util'
 
-class Square extends React.Component{
-    render(){
-        return (
-            <button 
-                className="square" 
-                onClick={()=>this.props.onClick()}
-                // this.setState({value:'X'})
-            >
-                {this.props.value}
-            </button>
-        );
-    }
+function Square(props){
+    return (
+        <button 
+            className="square"
+            onClick={props.onClick}
+        >
+            {props.value}
+        </button>
+    );
 }
 
 class Board extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-            squares: Array(9).fill(null)
+            squares: Array(9).fill(null),
+            xIsNext: true,
+            over: false
         }
     }
     
     clickHandle(i){
+        if(this.state.over) return;
+
         const squares = this.state.squares.slice();
-        squares[i] = 'X';
-        this.setState({squares:squares});
+        squares[i] = this.state.xIsNext?'X':'O';
+        this.setState({
+            squares:squares,
+            xIsNext:!this.state.xIsNext
+        });
     }
 
     renderSquare(i){
@@ -37,7 +42,14 @@ class Board extends React.Component{
         />;
     }
     render(){
-        const status = 'Next Player: X'
+        let winner = calculateWinner(this.state.squares),status;
+        console.log(winner);
+        if(winner){
+            status = 'Winner: '+winner;
+            this.state.over = true;
+        }else
+            status = 'Next Player: '+(this.state.xIsNext?'X':'O');
+
         return (
             <div>
                 <div className="status">{status}</div>
