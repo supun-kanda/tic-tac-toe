@@ -1,125 +1,55 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import calculateWinner from './util'
 
-function Square(props){
-    return (
-        <button 
-            className="square"
-            onClick={props.onClick}
-        >
-            {props.value}
-        </button>
-    );
-}
-
-class Board extends React.Component{
-
-    renderSquare(i){
-        return <Square 
-            value={this.props.squares[i]}
-            onClick={()=>this.props.onClick(i)}
-        />;
-    }
+class Comment extends React.Component{
     render(){
-        return (
-            <div>
-                <div className="board-row">
-                    {this.renderSquare(0)}
-                    {this.renderSquare(1)}
-                    {this.renderSquare(2)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(3)}
-                    {this.renderSquare(4)}
-                    {this.renderSquare(5)}
-                </div>
-                <div className="board-row">
-                    {this.renderSquare(6)}
-                    {this.renderSquare(7)}
-                    {this.renderSquare(8)}
-                </div>
+        return(
+            <div className='comment'>
+                <p className='comment-user'>{this.props.user}</p>
+                <p className='comment-body'>{this.props.body}</p>
+                <p className='comment-date'>{this.props.date}</p>
             </div>
         );
-    }
+    };
 }
 
-class Game extends React.Component{
-    constructor(props){
-        super(props);
+class CommentBox extends React.Component{
+    constructor(){
+        super();
         this.state = {
-            history: [{squares:Array(9).fill(null)}],
-            xIsNext: true,
-            over: false,
-            stepNumber: 0
-        };
+            showComments:false
+        }
     }
-
-    clickHandle(i){
-        if(this.state.over) return;
-
-        const history = this.state.history.slice(0,this.state.stepNumber+1),
-        current = history[history.length-1],
-        squares = current.squares.slice();        
-
-        squares[i] = this.state.xIsNext?'X':'O';
-
+    _handleClick(){
         this.setState({
-            history:history.concat([{squares:squares}]),
-            xIsNext:!this.state.xIsNext,
-            stepNumber:history.length
-        });
+            showComments : !this.state.showComments
+        })
     }
-
-    jumpTo(step,over){
-        this.setState({
-            stepNumber: step,
-            xIsNext: (step%2)===0,
-            over:false
-        });
-    }
-
     render(){
-        const history = this.state.history,
-        current = history[this.state.stepNumber],
-        winner = calculateWinner(current.squares),
-        moves = history.map((step,move) => {
-            const description = move ? 'Go to move #'+move: "Go to #Start"
-            return (
-                <li key={move}>
-                    <button onClick={()=>this.jumpTo(move)} className="button">{description}</button>
-                </li>
-            );
-        });
-        
-        let status;
-        if(winner){
-            status = 'Winner: '+winner;
-            this.state.over = true;
-        }else
-            status = 'Next Player: '+(this.state.xIsNext?'X':'O');
-
-        return (
-            <div className="game">
-                <div className="game-board">
-                    <Board 
-                        squares={current.squares}
-                        onClick={(i)=>this.clickHandle(i)}
-                    />
-                </div>
-                <div className="game-info">
-                    <div>{status}</div>
-                    <ol>{moves}</ol>
-                </div>
+        let commentNodes,buttonText;
+        if(this.state.showComments)
+            buttonText = "Hide Comments"
+        else
+            buttonText = "Show Comments"
+        const now = new Date();
+        if(this.state.showComments){
+            commentNodes = <div className='comment-list'>
+            <Comment user='Supun' body='Like this' date={now.toDateString()}/>
+            <Comment user='Nipun' body='Dislike this' date={now.toDateString()}/>
+        </div>;
+        }
+        return(
+            <div className='comment-box'>
+                <h3>Comments</h3>
+                <h4>lot of comments</h4>
+                <button className='button' onClick={this._handleClick.bind(this)}>{buttonText}</button>
+                {commentNodes}
             </div>
         );
-    }
+    };
 }
-
-// Runing part
 
 ReactDOM.render(
-    <Game />,
-    document.getElementById('root')
+    <CommentBox/>,document.getElementById('root')
 );

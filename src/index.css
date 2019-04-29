@@ -1,47 +1,44 @@
-body {
-    font: 50px "Centtury Gothic", Futura, sans-serif;
-    margin: 20px;
+html{
+    font-size: 20px;
+    font-family: 'Roboto',sans-serif;
 }
-ol,ul{
-    padding-left: 50px;
+body{
+    background-color: rgba(71, 161, 221, 0.4)
 }
-.board-row:after {
-    clear: both;
-    content: "";
-    display: table;
+.comment-box{
+    margin: 10px;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 1px 1px 1.5rem rgba(0,0,0,0.5);
+    padding: 10px;
+    background-color: rgba(71, 161, 230, 0.2);
+    overflow: hidden;
+    /* border-radius: 1rem; */
+
 }
-.status {
-    margin-bottom: 10px;
+.comment-list{
+
 }
-.square {
-    background: #fff;
-    border: 1px solid #999;
-    float: left;
-    font-size: 180px;
-    font-weight: bold;
-    line-height: 200px;
-    height: 200px;
-    margin-right: -1px;
-    margin-top: -1px;
-    padding: 0;
-    text-align: center;
-    width: 200px;
+.comment{
+    font-weight: 100;
+    background-color: white;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 1.5rem rgba(0,0,0,0.5);
+    margin: 10px;
+    padding: 2px;
 }
-.square:focus {
-    outline: none;
+.comment-user{
+    font-weight: 1500;
+    text-decoration: underline;
 }
-.kbd-navigation .square:focus {
-    background: #ddd;
-}
-.game {
-    display: flex;
-    flex-direction: row;
-}
-.game-info {
-    margin-left: 20px;
-}
-.button {
-    background:yellowgreen;
-    height: 40px;
-    width: 200px;
+.comment-body{}
+.comment-date{}
+.button{
+    padding: 10px;
+    border-radius: 1rem;
+    box-shadow: 1px 1px 1.5rem rgba(0,0,0,0.5);
+    /* justify-content: right; */
+    float: right;
+    display:inline-block;
+    margin: 10px;
 }
