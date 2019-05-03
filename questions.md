@@ -9,16 +9,19 @@
     - Because React's DOM apply only the changes to the actual DOM
 - **life cycle states**
     - render is a mandatory state
-- why redux
+- **why redux**
+    - Instead of having components states to their object, redux keep all of the states in a store. And a unit called provider makes the store available to all containers. Container fetch apps states data to render components. to update states, reducers get actions object and use them to update application state accordingly
 - **Why state shouldn't be updated directly**
     - The render happens with the state change, and the state object statys same with the direct change even the property is added
 - **What is DOM**
     - It's a representation of HTML documnets inside a browser as a tree of objects
-- what is CORS
+- **what is CORS**
+    - CORS is a mechanism which uses HTTP headers to allow a web application to request resources from another origin. Fetch API restrics the CORS in default.
 - **why componentwillmount wont work**
     - [read](https://daveceddia.com/where-fetch-data-componentwillmount-vs-componentdidmount)
     - because render method will not wait to finish componentWillMount. so render will still happen whether the data fetched or not. So it's better to render an empty page and then load
 - synthetic events
 - **why state is tend to in base class**
     - It's because the data flows only downwards in React, which means from parent to child. So, if the props will be changed in relevant children with the state change. So it should be the common parent to which the changing children.
-- why binding
+- **why binding**
+    - Otherwise the this refers to owner of the method. So if you pass the method to a child, Simply by the time it executes, the owner will be the child, not the parent. And If you want to change parent state through this, Best practise is to bind the parent object owner first and then pass it to the child, so it still updates parent state eventhough called inside the child.
