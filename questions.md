@@ -20,7 +20,10 @@
 - **why componentwillmount wont work**
     - [read](https://daveceddia.com/where-fetch-data-componentwillmount-vs-componentdidmount)
     - because render method will not wait to finish componentWillMount. so render will still happen whether the data fetched or not. So it's better to render an empty page and then load
-- synthetic events
+- **synthetic events**
+  - React wraps events which are native to browsers into a synthetic event Object and passes to React event handlers. Yet it has the same interface as the native events.
+  - The speciality is that React reuses the synthetic event object for performance matters. Which nulls the object values after each use. So accessing event properties asynchronous leads to get null values.
+  - [read](https://reactjs.org/docs/events.html)
 - **why state is tend to in base class**
     - It's because the data flows only downwards in React, which means from parent to child. So, if the props will be changed in relevant children with the state change. So it should be the common parent to which the changing children.
 - **why binding**
